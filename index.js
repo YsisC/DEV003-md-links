@@ -1,3 +1,4 @@
+// const { match } = require('assert')
 const fs = require('fs')
 const path = require('path')
 const marked = require('marked')
@@ -13,62 +14,108 @@ const getAbsolute = routePath => (pathAbsolute(routePath) ? routePath : path.res
 // determina si es un directorio, retorna(Booleano)
 const isADirectory = route => fs.statSync(route).isDirectory()
 
-//Leer archivo  de forma asincrónica todo el contenido de un archivo.
-const readFilePath = (routePath, callback) => fs.readFile(routePath, 'utf8', callback)
+const fileExt = routePath => path.extname(routePath)
 
-const extPath = routePath => path.extname(routePath)
+// Leer un directorio
+const readDirectory = route => fs.readdirSync(route)
 
-// console.log(pathAbsolute('./README.md'));
-// console.log(getAbsolute('./test.md'));
-// console.log(isADirectory('./README.md'));
-// console.log(extPath('test.md'));
-
-// Si es un directorio que haga un foreach y encuentre los archivos
+// --------------------------------Si es un directorio que haga un foreach y encuentre los archivos ------------------------------------------------
 // retorna un array solo con archivos .md (ruta absoluta))
 const onnlyFilesMD = routePath => {
   let arrayFileMD = []
   let routeAbsolute = getAbsolute(routePath)
 
   if (!isADirectory(routeAbsolute)) {
-    if (extPath(routeAbsolute) === '.md') {
+    if (fileExt(routeAbsolute) === '.md') {
       arrayFileMD.push(routeAbsolute)
     }
+  } else {
+    readDirectory(routePath).forEach(file => {
+      const completeRoute = path.join(route, file)
+      const allFiles = onnlyFilesMD(completeRoute)
+      arrayFileMD = arrayFileMD.concat(allFiles)
+    })
   }
   return arrayFileMD
 }
-// console.log(getAbsolute('README.md'))
-console.log(onnlyFilesMD(getAbsolute('README.md')))
 
-//Prueba de leer un archivo
+console.log(onnlyFilesMD(getAbsolute('README2.md')))
+
+//Leer archivo  de forma asincrónica todo el contenido de un archivo.
+const readFilePath = (routePath, callback) => fs.readFile(routePath, 'utf8', callback)
+// lee el archivo
+const readDocumentMD = document => fs.readFileSync(document, 'utf-8')
+// console.log(readDocumentMD(getAbsolute('README2.md')))
+
+// ----------------------------------------------------Prueba de leer un archivo asincrono ------------------------------------------------------
 // readFilePath('README.md', (err, data) => {
 //   if (err) throw err
 //   console.log(data)
 // })
 // / retorna el contenido del path
 
-// lee el archivo
-const readDocumentMD = document => fs.readFileSync(document, 'utf-8')
-console.log(readDocumentMD(getAbsolute('README.md')))
-
 // Obtener los links
 // retorna un array de objetos con tres propiedades por cada link
-const getLinks = routePath => {
-  const render = new marked.Renderer()
+// ---------------------------------------------------Option 1 Obtener Links----------------------------------------------------------------
+// const readFile = routePath => {
+//   const link = []
+//   return new Promise((resolve, reject) => {
+//     readFilePath(routePath, (error, data) => {
+//       if (error) {
+//         reject('ocurrio un error')
+//       } else {
+//         const regex = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g
+//         // let macht = regex.test(data)
+//         console.log(typeof data)
+//         const arrayData = data.split(' ')
+//         // const regex = /\[(.+?)\]\(https?:\/\/[^\s)]+)\)/g:
+//         let mach = regex.exec(data)
+//         console.log(mach)
+//         arrayData.forEach(file => {
+//           // let regex = /\[(.+?)\]\(https?:\/\/[^\s)]+)\)/g
+//           let mach = regex.exec(file)
+//           console.log(file)
+//           console.log(file.match(regex))
+//         })
+//         // while (macht == null) {
+//         //   link.push({
+//         //     href: match[2],
+//         //     text: match[1],
+//         //     file: routePath,
+//         //   })
+//         //   macht.exec(data)
+//         // }
+//         console.log('Cada link', link)
+//         resolve('Los liniks de la ruta')
+//       }
+//     })
+//   })
+// }
+
+// console.log(readFile(getAbsolute('README2.md')))
+
+// --------------------------------Option 2 Obtener Links------------------------------------------------
+const getLinks = array => {
+  const renderer = new marked.Renderer()
   const arrayLink = []
-  onnlyFilesMD(routePath).forEach(file => {
-    render.link = (href, tittle, text) => {
+  array.forEach(filePath => {
+    const file = fs.readFileSync(filePath, 'utf8')
+    renderer.link = (href, text) => {
       const objLink = {
         href,
-        tittle,
         text,
+        path: filePath,
       }
       arrayLink.push(objLink)
     }
-    marked(readDocumentMD(file), { render })
+    marked.marked(file, { renderer })
   })
+  return arrayLink
 }
 
-getLinks(getAbsolute('README.md'))
+console.log(getLinks(onnlyFilesMD('README2.md')))
+
+// -------------------------------- Funcion de MDLikns ------------------------------------------------
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
@@ -85,7 +132,6 @@ const mdLinks = (path, options) => {
     }
   })
 }
-console.log(mdLinks(getAbsolute('README.md')))
 
 module.exports = {
   mdLinks,
