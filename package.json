@@ -39,6 +39,11 @@
     "markdown",
     "NodeJs"
   ],
-  "author": "",
-  "license": "ISC"
+  "author": "Ysis Longart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YsisC/DEV003-md-links/issues"
+  },
+  "homepage": " https://github.com/YsisC/DEV003-md-links#readme"
+ 
 }

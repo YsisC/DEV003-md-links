@@ -2,6 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 const marked = require('marked')
+const { title } = require('process')
 
 // determina si la ruta existe, retorna(Booleano)
 const routeExist = routePath => fs.existsSync(routePath)
@@ -30,16 +31,16 @@ const onnlyFilesMD = routePath => {
       arrayFileMD.push(routeAbsolute)
     }
   } else {
-    readDirectory(routePath).forEach(file => {
-      const completeRoute = path.join(route, file)
-      const allFiles = onnlyFilesMD(completeRoute)
+    readDirectory(routePath).forEach(element => {
+      const addRoute = path.join(routeAbsolute, element)
+      const allFiles = onnlyFilesMD(addRoute)
       arrayFileMD = arrayFileMD.concat(allFiles)
     })
   }
   return arrayFileMD
 }
 
-console.log(onnlyFilesMD(getAbsolute('README2.md')))
+console.log(onnlyFilesMD(getAbsolute('testDocuments')))
 
 //Leer archivo  de forma asincrónica todo el contenido de un archivo.
 const readFilePath = (routePath, callback) => fs.readFile(routePath, 'utf8', callback)
@@ -100,7 +101,8 @@ const getLinks = array => {
   const arrayLink = []
   array.forEach(filePath => {
     const file = fs.readFileSync(filePath, 'utf8')
-    renderer.link = (href, text) => {
+
+    renderer.link = (href, t, text) => {
       const objLink = {
         href,
         text,
@@ -113,7 +115,10 @@ const getLinks = array => {
   return arrayLink
 }
 
-console.log(getLinks(onnlyFilesMD('README2.md')))
+console.log(getLinks(onnlyFilesMD('testDocuments')))
+// console.log(getLinks(onnlyFilesMD('../DEV003-MD-LINKS')))
+
+// -------------------------------- Funcion para revisar el estado de los enlaces ------------------------------------------------
 
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 
