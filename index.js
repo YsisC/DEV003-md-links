@@ -38,7 +38,7 @@ const onnlyFilesMD = routePath => {
   }
   return arrayFileMD
 }
-
+// console.log(onnlyFilesMD('README2.md'))
 // -------------------------Leer archivo  de forma asincrónica todo el contenido de un archivo.--------------------------------
 const readFilePath = routePath => {
   return new Promise(function (resolve, reject) {
@@ -56,35 +56,41 @@ const readDocumentMD = document => fs.readFileSync(document, 'utf-8')
 
 // ---------------------------------------------------- Opcion 1 Prueba de leer un archivo asincrono ------------------------------------------------------
 const getLinks = routePath => {
-  console.log(onnlyFilesMD(routePath))
-  const arrayLink = []
-  const renderer = new marked.Renderer()
-  onnlyFilesMD(routePath).forEach(filePath => {
-    readFilePath(filePath)
-      .then(result => {
-        const file = result
+  // console.log(onnlyFilesMD(routePath))
+  return new Promise(function (resolve, reject) {
+    const renderer = new marked.Renderer()
+    const arrayLink = []
+    onnlyFilesMD(routePath).forEach(filePath => {
+      readFilePath(filePath)
+        .then(result => {
+          const file = result
 
-        renderer.link = (href, t, text) => {
-          const objLink = {
-            href,
-            text,
-            path: filePath,
+          renderer.link = (href, t, text) => {
+            const objLink = {
+              href,
+              text,
+              path: filePath,
+            }
+            arrayLink.push(objLink)
           }
-          arrayLink.push(objLink)
-          // console.log(objLink)
-          console.log(arrayLink)
-          return arrayLink
-        }
 
-        marked.marked(file, { renderer })
-      })
-      .catch(error => {
-        console.log(error)
-      })
+          marked.marked(file, { renderer })
+          // console.log(arrayLink)s
+          resolve(arrayLink)
+        })
+        .catch(error => {
+          console.log(error)
+          reject('Error no hay Links')
+        })
+    })
   })
+
+  // console.log(arrayLink)
+  // return arrayLink
 }
 
-console.log(getLinks('testDocuments'))
+getLinks('testDocuments').then(res => console.log(res))
+// console.log(getLinks('testDocuments'))
 
 // --------------------------------Option 2 Obtener Links sincronicos ------------------------------------------------
 // const getLinks = array => {

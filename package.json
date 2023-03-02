@@ -31,7 +31,9 @@
   },
   "scripts": {
     "test": "jest --coverage",
-    "serve": "node index.js"
+    "serve": "node index.js",
+    "lint": "eslint ./", 
+	  "lint:fix": "eslint ./ --fix" 
   },
   "keywords": [
     "markdown",
