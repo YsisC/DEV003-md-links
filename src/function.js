@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const marked = require('marked')
+const { error } = require('console')
 
 // --------------------------------------------------determina si la ruta existe, retorna(Booleano)-----------------------------------
 const routeExist = routePath => fs.existsSync(routePath)
@@ -50,9 +51,6 @@ const readFilePath = routePath => {
     })
   })
 }
-// -------------------------Leer archivo  de forma sincrónica todo el contenido de un archivo.---------------------------
-const readDocumentMD = document => fs.readFileSync(document, 'utf-8')
-// console.log(readDocumentMD(getAbsolute('README2.md')))
 
 // ---------------------------------------------------- Opcion 1 Prueba de leer un archivo asincrono ------------------------------------------------------
 const getLinks = routePath => {
@@ -69,7 +67,7 @@ const getLinks = routePath => {
             const objLink = {
               href,
               text,
-              path: filePath,
+              file: filePath,
             }
             arrayLink.push(objLink)
           }
@@ -84,37 +82,85 @@ const getLinks = routePath => {
         })
     })
   })
-
-  // console.log(arrayLink)
-  // return arrayLink
 }
 
-getLinks('testDocuments').then(res => console.log(res))
-// console.log(getLinks('testDocuments'))
+// getLinks('testDocuments').then(res => console.log(res))
 
-// --------------------------------Option 2 Obtener Links sincronicos ------------------------------------------------
-// const getLinks = array => {
-//   const renderer = new marked.Renderer()
-//   const arrayLink = []
-//   array.forEach(filePath => {
-//     const file = fs.readFileSync(filePath, 'utf8')
+// -------------------------------- Pruebas de fetch -----------------------------------------------
+// response.status >= 200 && response.status < 300
 
-//     renderer.link = (href, t, text) => {
-//       const objLink = {
-//         href,
-//         text,
-//         path: filePath,
-//       }
-//       arrayLink.push(objLink)
-//     }
-//     marked.marked(file, { renderer })
+// fetch('https://www.genbeta.com/desarrollo/node-js-y-npm')
+//   .then(response =>
+//     console.log({
+//       status: response.status,
+//       message: response.ok ? 'ok' : 'fail',
+//       href: response.url,
+//     })
+//   )
+//   .catch(er => {
+//     er
 //   })
-//   return arrayLink
+// -------------------------------- Prueba 1 Funcion de Obtener Status Ok o Fail ------------------------------------------------
+//Paso 1 Crear una funcion
+//Paso 2 debe recibir un array con objetos de links href, text y file
+//Paso 3 debe iterar el array con obj y retornar los valores de href, text y file
+
+//Debe retornar un nuevo objeto con los link
+
+const getStatusLink = route => {
+  getLinks(route)
+    .then(result => {
+      const promise = result.map(objLink => {
+        fetch(objLink.href)
+          .then(response => {
+            const objStatusLink = {
+              href: response.url,
+              text: objLink.text,
+              file: objLink.file,
+              status: response.status,
+              message: response.ok ? 'ok' : 'fail',
+            }
+            console.log(objStatusLink)
+            return objStatusLink
+          })
+          .catch(err => {
+            err
+          })
+      })
+
+      return promise
+    })
+    .catch(err => err)
+}
+
+getStatusLink('README2.md')
+
+// -------------------------------- Funcion de Obtener Status Ok o Fail ------------------------------------------------
+//Paso 1 Crear una funcion
+//Paso 2 debe recibir un array con objetos de links href, text y file
+//Paso 3 debe iterar el array con obj y retornar los valores de href, text y file
+
+//Debe retornar un nuevo objeto con los link
+
+// const getStatus = arrayofLinks => {
+//   // console.log(typeof arrayofLinks)
+//   return new Promise(function (resolve) {
+//     // console.log(arrayofLinks)
+
+//     arrayofLinks.map(() => {
+//       const objStatus = link => {
+//         link.href,
+//           // console.log(link)
+//           // console.log(link.href)
+//           // console.log(link.text)
+//           resolve(objStatus)
+//       }
+//     })
+//   })
 // }
-
-// console.log(getLinks(onnlyFilesMD('testDocuments')))
-
-// -------------------------------- Funcion para revisar el estado de los enlaces ------------------------------------------------
+// getStatus(getLinks('README2.md').then(resultLikes => resultLikes))
+//   .then(resStatus => console.log(resStatus))
+//   .catch(error => error)
 
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 
@@ -136,4 +182,7 @@ const mdLinks = (path, options) => {
 
 module.exports = {
   mdLinks,
+  pathAbsolute,
+  getAbsolute,
+  getLinks,
 }
