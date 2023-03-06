@@ -1,4 +1,4 @@
-const { routeExist, pathAbsolute, getAbsolute, getLinks } = require('./function')
+const { routeExist, pathAbsolute, getAbsolute, getLinks, getStatusLink } = require('./function')
 // const fetch = require('node-fetch')
 
 // fetch('http://example.com/movies.json')

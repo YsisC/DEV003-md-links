@@ -135,33 +135,6 @@ const getStatusLink = route => {
 
 getStatusLink('README2.md')
 
-// -------------------------------- Funcion de Obtener Status Ok o Fail ------------------------------------------------
-//Paso 1 Crear una funcion
-//Paso 2 debe recibir un array con objetos de links href, text y file
-//Paso 3 debe iterar el array con obj y retornar los valores de href, text y file
-
-//Debe retornar un nuevo objeto con los link
-
-// const getStatus = arrayofLinks => {
-//   // console.log(typeof arrayofLinks)
-//   return new Promise(function (resolve) {
-//     // console.log(arrayofLinks)
-
-//     arrayofLinks.map(() => {
-//       const objStatus = link => {
-//         link.href,
-//           // console.log(link)
-//           // console.log(link.href)
-//           // console.log(link.text)
-//           resolve(objStatus)
-//       }
-//     })
-//   })
-// }
-// getStatus(getLinks('README2.md').then(resultLikes => resultLikes))
-//   .then(resStatus => console.log(resStatus))
-//   .catch(error => error)
-
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 
 const mdLinks = (path, options) => {
@@ -185,4 +158,5 @@ module.exports = {
   pathAbsolute,
   getAbsolute,
   getLinks,
+  getStatusLink,
 }
