@@ -5,6 +5,7 @@ const { error } = require('console')
 
 // --------------------------------------------------determina si la ruta existe, retorna(Booleano)-----------------------------------
 const routeExist = routePath => fs.existsSync(routePath)
+
 // -------------------------------------------------- determina si es una ruta absoluta retorna(Booleano)------------------------------
 const pathAbsolute = routePath => path.isAbsolute(routePath)
 
@@ -73,7 +74,6 @@ const getLinks = routePath => {
           }
 
           marked.marked(file, { renderer })
-          // console.log(arrayLink)s
           resolve(arrayLink)
         })
         .catch(error => {
@@ -100,7 +100,7 @@ const getLinks = routePath => {
 //   .catch(er => {
 //     er
 //   })
-// -------------------------------- Prueba 1 Funcion de Obtener Status Ok o Fail ------------------------------------------------
+// -------------------------------- Prueba 1 Funcion de Obtener Status Ok o Fail  sincronica------------------------------------------------
 //Paso 1 Crear una funcion
 //Paso 2 debe recibir un array con objetos de links href, text y file
 //Paso 3 debe iterar el array con obj y retornar los valores de href, text y file
@@ -133,29 +133,28 @@ const getStatusLink = route => {
     .catch(err => err)
 }
 
-getStatusLink('README2.md')
+// getStatusLink('README2.md')
 
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 
-const mdLinks = (path, options) => {
-  return new Promise((resolve, reject) => {
-    //Identifica si la ruta existe
-    if (routeExist(path)) {
-      //Chequear o converir a una ruta absoluta
-      //Probar si esa ruta absoluta es un archivo
-      // si es un directorio
-      resolve('ruta')
-      // resolve(getLinks(path))
-    } else {
-      //Sino existe la ruta
-      reject('la ruta no existe')
-    }
-  })
-}
+// const mdLinks = (path, options) => {
+//   return new Promise((resolve, reject) => {
+//     //Identifica si la ruta existe
+//     if (routeExist(path)) {
+//       //Chequear o converir a una ruta absoluta
+//       //Probar si esa ruta absoluta es un archivo
+//       // si es un directorio
+//       resolve('ruta')
+//       // resolve(getLinks(path))
+//     } else {
+//       //Sino existe la ruta
+//       reject('la ruta no existe')
+//     }
+//   })
+// }
 
 module.exports = {
-  mdLinks,
-  pathAbsolute,
+  routeExist,
   getAbsolute,
   getLinks,
   getStatusLink,

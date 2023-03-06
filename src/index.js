@@ -1,24 +1,48 @@
-const { routeExist, pathAbsolute, getAbsolute, getLinks, getStatusLink } = require('./function')
-// const fetch = require('node-fetch')
+const fs = require('fs')
+const { routeExist, getAbsolute, getStatusLink, getLinks } = require('./function')
 
-// fetch('http://example.com/movies.json')
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     //Identifica si la ruta existe
-    if (routeExist(path)) {
+    const pathAbsolute = getAbsolute(path)
+
+    console.log(routeExist('./README2.md'))
+    if (routeExist(pathAbsolute)) {
+      // const file = getLinks(res => res)
+      // resolve(file)
       //Chequear o converir a una ruta absoluta
       //Probar si esa ruta absoluta es un archivo
       // si es un directorio
-      resolve('ruta')
-      // resolve(getLinks(path))
+
+      if (options.validate) {
+        console.log('es verdadero')
+        resolve(getStatusLink(pathAbsolute))
+        return
+      } else if (!options.validate) {
+        console.log('me tomo el falso')
+        resolve(
+          getLinks(pathAbsolute)
+            .then(link => link)
+            .catch(err => err)
+        )
+        return
+      }
     } else {
       //Sino existe la ruta
-      reject('la ruta no existe')
+      reject('Este archivo no existe')
     }
   })
 }
+
+// mdLinks('README2.md', { validate: false })
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
+
+mdLinks('README2.md', { validate: true })
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
 
 module.exports = {
   mdLinks,
