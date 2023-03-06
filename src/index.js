@@ -7,8 +7,8 @@ const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     //Identifica si la ruta existe
     const pathAbsolute = getAbsolute(path)
+    const arrayLinkStatus = []
 
-    console.log(routeExist('./README2.md'))
     if (routeExist(pathAbsolute)) {
       // const file = getLinks(res => res)
       // resolve(file)
@@ -17,17 +17,16 @@ const mdLinks = (path, options) => {
       // si es un directorio
 
       if (options.validate) {
-        console.log('es verdadero')
-        resolve(getStatusLink(pathAbsolute))
-        return
+        const valid = getStatusLink(pathAbsolute)
+        // console.log('es verdadero')
+        resolve(arrayLinkStatus.push(valid))
       } else if (!options.validate) {
-        console.log('me tomo el falso')
+        // console.log('me tomo el falso')
         resolve(
           getLinks(pathAbsolute)
             .then(link => link)
             .catch(err => err)
         )
-        return
       }
     } else {
       //Sino existe la ruta
@@ -40,9 +39,9 @@ const mdLinks = (path, options) => {
 //   .then(res => console.log(res))
 //   .catch(err => console.log(err))
 
-mdLinks('README2.md', { validate: true })
-  .then(res => console.log(res))
-  .catch(err => console.log(err))
+// mdLinks('README2.md', { validate: true })
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
 
 module.exports = {
   mdLinks,

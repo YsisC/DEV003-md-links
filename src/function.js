@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const marked = require('marked')
-const { error } = require('console')
 
 // --------------------------------------------------determina si la ruta existe, retorna(Booleano)-----------------------------------
 const routeExist = routePath => fs.existsSync(routePath)
@@ -40,7 +39,7 @@ const onnlyFilesMD = routePath => {
   }
   return arrayFileMD
 }
-// console.log(onnlyFilesMD('README2.md'))
+// console.log(onnlyFilesMD('testDocuments'))s
 // -------------------------Leer archivo  de forma asincrónica todo el contenido de un archivo.--------------------------------
 const readFilePath = routePath => {
   return new Promise(function (resolve, reject) {
@@ -86,19 +85,6 @@ const getLinks = routePath => {
 
 // getLinks('testDocuments').then(res => console.log(res))
 
-// -------------------------------- Pruebas de fetch -----------------------------------------------
-// response.status >= 200 && response.status < 300
-
-// fetch('https://www.genbeta.com/desarrollo/node-js-y-npm')
-//   .then(response =>
-//     console.log({
-//       status: response.status,
-//       message: response.ok ? 'ok' : 'fail',
-//       href: response.url,
-//     })
-//   )
-//   .catch(er => {
-//     er
 //   })
 // -------------------------------- Prueba 1 Funcion de Obtener Status Ok o Fail  sincronica------------------------------------------------
 //Paso 1 Crear una funcion
@@ -108,6 +94,7 @@ const getLinks = routePath => {
 //Debe retornar un nuevo objeto con los link
 
 const getStatusLink = route => {
+  const arrayLinkStatus = []
   getLinks(route)
     .then(result => {
       const promise = result.map(objLink => {
@@ -121,6 +108,7 @@ const getStatusLink = route => {
               message: response.ok ? 'ok' : 'fail',
             }
             console.log(objStatusLink)
+            // arrayLink.push(objLink)
             return objStatusLink
           })
           .catch(err => {
@@ -128,32 +116,49 @@ const getStatusLink = route => {
           })
       })
 
-      return promise
+      return promise.push(objStatusLink)
     })
     .catch(err => err)
 }
 
-// getStatusLink('README2.md')
+// console.log(getStatusLink('README2.md'))
 
-// -------------------------------- Funcion de MDLikns ------------------------------------------------
-
-// const mdLinks = (path, options) => {
-//   return new Promise((resolve, reject) => {
-//     //Identifica si la ruta existe
-//     if (routeExist(path)) {
-//       //Chequear o converir a una ruta absoluta
-//       //Probar si esa ruta absoluta es un archivo
-//       // si es un directorio
-//       resolve('ruta')
-//       // resolve(getLinks(path))
-//     } else {
-//       //Sino existe la ruta
-//       reject('la ruta no existe')
-//     }
+// -------------------------------- Prueba 2 Funcion de Obtener Status Ok o Fail  asincronica----------------------------------
+// const getStatusLink = route => {
+//   return Promise.all(route => {
+//     getLinks(route).then(result => {
+//       const arrayLinkStatus = []
+//       result.map(objLink => {
+//         return fetch(objLink.href)
+//           .then(response => {
+//             const objStatusLink = {
+//               href: response.url,
+//               text: objLink.text,
+//               file: objLink.file,
+//               status: response.status,
+//               message: response.ok ? 'ok' : 'fail',
+//             }
+//             // console.log(objStatusLink)
+//             arrayLinkStatus.push(objStatusLink)
+//             return arrayLinkStatus
+//             // resolve(arrayLinkStatus)
+//           })
+//           .catch(err => {
+//             return err
+//           })
+//       })
+//     })
 //   })
 // }
+// // console.log(arrayLinkStatus)
+// // resolve(promise)
+
+// getStatusLink('README2.md')
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
 
 module.exports = {
+  pathAbsolute,
   routeExist,
   getAbsolute,
   getLinks,
