@@ -1,4 +1,3 @@
-const fs = require('fs')
 const { routeExist, getAbsolute, getStatusLink, getLinks } = require('./function')
 
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
@@ -16,8 +15,9 @@ const mdLinks = (path, options) => {
       // si es un directorio
 
       if (options.validate) {
-        const valid = getStatusLink(pathAbsolute)
-        // console.log('es verdadero')
+        console.log('es verdadero')
+        const valid = getStatusLink(pathAbsolute).then(link => link)
+
         resolve(valid)
       } else if (!options.validate) {
         console.log('es falso')
@@ -34,7 +34,7 @@ const mdLinks = (path, options) => {
   })
 }
 
-// mdLinks('README2.md', { validate: false })
+// mdLinks('testDocuments', { validate: false })
 //   .then(res => console.log(res))
 //   .catch(err => console.log(err))
 
