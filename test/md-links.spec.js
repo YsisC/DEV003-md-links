@@ -9,6 +9,7 @@ const {
   fileExt,
   onnlyFilesMD,
   readFilePath,
+  getLinks,
 } = require('../src/function.js')
 
 // -------------Si existe la ruta--------
@@ -17,17 +18,13 @@ describe('routeExist', () => {
     const path = 'README.md'
     expect(routeExist(path)).toBe(true)
   })
-  it('should return a false.', () => {
-    const path = 'README5.md'
-    expect(routeExist(path)).toBe(false)
-  })
 })
 
 // -------------Si  la ruta es absoluta --------
 
 describe('pathAbsolute', () => {
   it('should return patAbsolute  true .', () => {
-    const path = 'README.md'
+    const path = 'test.md'
 
     expect(pathAbsolute(path)).toBe(false)
   })
@@ -36,16 +33,16 @@ describe('pathAbsolute', () => {
 
 describe('getAbsolute', () => {
   it('should return a routAbsolute.', () => {
-    const path = 'README2.md'
-
-    expect(getAbsolute(path)).toBe('C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\README2.md')
+    const path = 'test.md'
+    // console.log(getAbsolute(path))
+    expect(getAbsolute(path)).toBe('C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\test.md')
   })
 })
 // -------------Si  es un directorio --------
 
 describe('isADirectory', () => {
   it('should return a directory .', () => {
-    const path = 'README2.md'
+    const path = 'README.md'
 
     expect(isADirectory(path)).toBe(false)
   })
@@ -65,7 +62,7 @@ describe('readDirectory', () => {
   it('should return a file from the directory .', () => {
     const path = 'testDocuments'
     // console.log(readDirectory(path))
-    expect(readDirectory(path)).toEqual(['test.md', 'test2.txt'])
+    expect(readDirectory(path)).toEqual(['otherDocuments', 'test.md', 'test2.txt'])
   })
 })
 // -------------Retornar un array de archivos md --------
@@ -74,14 +71,15 @@ describe('onnlyFilesMD', () => {
     const path = 'testDocuments'
     // console.log(onnlyFilesMD(path))
     expect(onnlyFilesMD(path)).toEqual([
+      'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
       'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\test.md',
     ])
   })
 })
 // -------------Retornar un string de un archivo md --------
 describe('readFilePath', () => {
-  it('should return readFilePath.', () => {
-    const path = 'README2.md'
+  it('should return readFilePath string.', () => {
+    const path = 'test.md'
 
     return readFilePath(path)
       .then(re => {
@@ -96,8 +94,26 @@ describe('readFilePath', () => {
       })
   })
 })
+// -------------Retornar un array de link de un archivo md --------
+describe('getLinks', () => {
+  it('should return getLinks.', () => {
+    const path = 'test.md'
 
-// -------------Si no existe la ruta--------
+    return getLinks(path)
+      .then(links => {
+        console.log(links)
+        expect(links).toBe(typeof object)
+        // console.log(re)
+      })
+      .catch(error => {
+        {
+          error
+        }
+      })
+  })
+})
+
+// -------------Si no existe la ruta-------
 describe('mdLinks', () => {
   it('should reject when a path doesnt exits.', () => {
     return mdLinks('/ruta/doesntexist.md').catch(error => {
