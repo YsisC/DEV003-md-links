@@ -123,4 +123,9 @@ module.exports = {
   getAbsolute,
   getLinks,
   getStatusLink,
+  isADirectory,
+  fileExt,
+  readDirectory,
+  onnlyFilesMD,
+  readFilePath,
 }

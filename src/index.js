@@ -1,4 +1,5 @@
 const { routeExist, getAbsolute, getStatusLink, getLinks } = require('./function')
+const Color = require('colors')
 
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 
@@ -15,12 +16,12 @@ const mdLinks = (path, options) => {
       // si es un directorio
 
       if (options.validate) {
-        console.log('es verdadero')
+        console.log('Validate: true'.bgGreen)
         const valid = getStatusLink(pathAbsolute).then(link => link)
 
         resolve(valid)
       } else if (!options.validate) {
-        console.log('es falso')
+        console.log('validate: false'.bgMagenta)
         resolve(
           getLinks(pathAbsolute)
             .then(link => link)
@@ -38,9 +39,9 @@ const mdLinks = (path, options) => {
 //   .then(res => console.log(res))
 //   .catch(err => console.log(err))
 
-mdLinks('README2.md', { validate: true })
-  .then(res => console.log(res))
-  .catch(err => console.log(err))
+// mdLinks('README2.md', { validate: true })
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
 
 module.exports = {
   mdLinks,
