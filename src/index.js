@@ -7,7 +7,6 @@ const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     //Identifica si la ruta existe
     const pathAbsolute = getAbsolute(path)
-    const arrayLinkStatus = []
 
     if (routeExist(pathAbsolute)) {
       // const file = getLinks(res => res)
@@ -19,9 +18,9 @@ const mdLinks = (path, options) => {
       if (options.validate) {
         const valid = getStatusLink(pathAbsolute)
         // console.log('es verdadero')
-        resolve(arrayLinkStatus.push(valid))
+        resolve(valid)
       } else if (!options.validate) {
-        // console.log('me tomo el falso')
+        console.log('es falso')
         resolve(
           getLinks(pathAbsolute)
             .then(link => link)
@@ -39,9 +38,9 @@ const mdLinks = (path, options) => {
 //   .then(res => console.log(res))
 //   .catch(err => console.log(err))
 
-// mdLinks('README2.md', { validate: true })
-//   .then(res => console.log(res))
-//   .catch(err => console.log(err))
+mdLinks('README2.md', { validate: true })
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
 
 module.exports = {
   mdLinks,

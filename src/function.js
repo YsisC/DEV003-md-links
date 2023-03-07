@@ -52,7 +52,7 @@ const readFilePath = routePath => {
   })
 }
 
-// ---------------------------------------------------- Opcion 1 Prueba de leer un archivo asincrono ------------------------------------------------------
+// ----------------------------------------------------  Prueba de leer un archivo asincrono ------------------------------------------------------
 const getLinks = routePath => {
   // console.log(onnlyFilesMD(routePath))
   return new Promise(function (resolve, reject) {
@@ -94,7 +94,6 @@ const getLinks = routePath => {
 //Debe retornar un nuevo objeto con los link
 
 const getStatusLink = route => {
-  const arrayLinkStatus = []
   getLinks(route)
     .then(result => {
       const promise = result.map(objLink => {
@@ -116,7 +115,7 @@ const getStatusLink = route => {
           })
       })
 
-      return promise.push(objStatusLink)
+      return promise
     })
     .catch(err => err)
 }
