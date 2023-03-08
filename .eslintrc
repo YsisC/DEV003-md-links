@@ -4,8 +4,8 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier"],
   "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
   "plugins": ["prettier"],
   "parserOptions": {
     "ecmaVersion": 2018

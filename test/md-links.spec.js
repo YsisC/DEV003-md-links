@@ -10,6 +10,7 @@ const {
   onnlyFilesMD,
   readFilePath,
   getLinks,
+  getStatusLink,
 } = require('../src/function.js')
 
 // -------------Si existe la ruta--------
@@ -34,7 +35,6 @@ describe('pathAbsolute', () => {
 describe('getAbsolute', () => {
   it('should return a routAbsolute.', () => {
     const path = 'test.md'
-    // console.log(getAbsolute(path))
     expect(getAbsolute(path)).toBe('C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\test.md')
   })
 })
@@ -43,7 +43,6 @@ describe('getAbsolute', () => {
 describe('isADirectory', () => {
   it('should return a directory .', () => {
     const path = 'README.md'
-
     expect(isADirectory(path)).toBe(false)
   })
 })
@@ -61,7 +60,7 @@ describe('fileExt', () => {
 describe('readDirectory', () => {
   it('should return a file from the directory .', () => {
     const path = 'testDocuments'
-    // console.log(readDirectory(path))
+
     expect(readDirectory(path)).toEqual(['otherDocuments', 'test.md', 'test2.txt'])
   })
 })
@@ -85,7 +84,6 @@ describe('readFilePath', () => {
       .then(re => {
         //  console.log(typeof re))
         expect(re).toBe(typeof string)
-        // console.log(re)
       })
       .catch(error => {
         {
@@ -101,9 +99,25 @@ describe('getLinks', () => {
 
     return getLinks(path)
       .then(links => {
-        console.log(links)
+        // console.log(links)
         expect(links).toBe(typeof object)
-        // console.log(re)
+      })
+      .catch(error => {
+        {
+          error
+        }
+      })
+  })
+})
+// -------------Retornar un array de link de un archivo md --------
+describe('getStatusLink', () => {
+  it('should return getStatusLink.', () => {
+    const path = 'README.md'
+
+    return getStatusLink(path)
+      .then(links => {
+        console.log(typeof links)
+        // expect(links).toBe(typeof object)
       })
       .catch(error => {
         {
