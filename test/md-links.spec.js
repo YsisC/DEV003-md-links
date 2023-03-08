@@ -110,22 +110,22 @@ describe('getLinks', () => {
   })
 })
 // -------------Retornar un array de link de un archivo md --------
-describe('getStatusLink', () => {
-  it('should return getStatusLink.', () => {
-    const path = 'README.md'
+// describe('getStatusLink', () => {
+//   it('should return getStatusLink.', () => {
+//     const path = 'README.md'
 
-    return getStatusLink(path)
-      .then(links => {
-        console.log(typeof links)
-        // expect(links).toBe(typeof object)
-      })
-      .catch(error => {
-        {
-          error
-        }
-      })
-  })
-})
+//     return getStatusLink(path)
+//       .then(links => {
+//         console.log(typeof links)
+//         // expect(links).toBe(typeof object)
+//       })
+//       .catch(error => {
+//         {
+//           error
+//         }
+//       })
+//   })
+// })
 
 // -------------Si no existe la ruta-------
 describe('mdLinks', () => {

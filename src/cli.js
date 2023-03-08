@@ -7,7 +7,7 @@ const { mdLinks } = require('./index')
 // import mdLinks from "./index.js";
 mdLinks('README2.md', { validate: true })
   .then(res => {
-    res
+    console.log(res)
   })
   .catch(error => {
     console.log(error)
