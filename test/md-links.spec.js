@@ -65,7 +65,7 @@ describe('readDirectory', () => {
   })
 })
 // -------------Retornar un array de archivos md --------
-describe('onnlyFilesMD', () => {
+describe('onlyFilesMD', () => {
   it('should return onnlyFilesMD.', () => {
     const path = 'testDocuments'
     // console.log(onnlyFilesMD(path))
@@ -101,6 +101,20 @@ describe('getLinks', () => {
       .then(links => {
         // console.log(links)
         expect(links).toBe(typeof object)
+      })
+      .catch(error => {
+        {
+          error
+        }
+      })
+  })
+  it('should return getLinks.', () => {
+    const path = 'test.md'
+
+    return getLinks(path)
+      .then(links => {
+        console.log(typeof links)
+        expect(links).toEqual(object)
       })
       .catch(error => {
         {
