@@ -12,6 +12,8 @@ const {
   getLinks,
   getStatusLink,
 } = require('../src/function.js')
+// let describe = ''
+// let it = ''
 
 // -------------Si existe la ruta--------
 describe('routeExist', () => {
@@ -43,6 +45,7 @@ describe('getAbsolute', () => {
 describe('isADirectory', () => {
   it('should return a directory .', () => {
     const path = 'README.md'
+    // console.log(isADirectory(path))
     expect(isADirectory(path)).toBe(false)
   })
 })
@@ -113,7 +116,7 @@ describe('getLinks', () => {
 
     return getLinks(path)
       .then(links => {
-        console.log(typeof links)
+        // console.log(typeof links)
         expect(links).toEqual(object)
       })
       .catch(error => {
@@ -123,7 +126,7 @@ describe('getLinks', () => {
       })
   })
 })
-// -------------Retornar un array de link de un archivo md --------
+// -------------opcion 1 getStatus --------
 // describe('getStatusLink', () => {
 //   it('should return getStatusLink.', () => {
 //     const path = 'README.md'
@@ -141,6 +144,39 @@ describe('getLinks', () => {
 //   })
 // })
 
+// // ------------- Opcion 2 getstatusLink--------
+// global.fetch = jest.fn(() => {
+//   Promise.resolve({ status: 200, ok: 'ok' })
+// })
+
+// describe('getStatusLink', () => {
+//   test('should return status y message ok.', () => {
+//     const linkValidate = [
+//       {
+//         href: 'https://www.genbeta.com/desarrollo/node-js-y-npm',
+//         text: 'Node.js y npm',
+//         file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\README2.md',
+//         status: 200,
+//         ok: 'ok',
+//       },
+//     ]
+
+//     // getLinks.mockResolvedValue(link)
+//     return getStatusLink(route).then(data => {
+//       console.log(data)
+//       // expect(data).toEqual(linkValidate)
+//     })
+//     // const LinkFail =[
+//     //   {
+//     //     href: 'https://www.drauta.com/que-es-nodejs-y-a-que-sirve',
+//     //     text: '¿Qué es Node.js y para qué sirve? - drauta.com',
+//     //     file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\README2.md',
+//     //     status: 404,
+//     //     ok: 'fail'
+//     //   },
+//     // ]
+//   })
+// })
 // -------------Si no existe la ruta-------
 describe('mdLinks', () => {
   it('should reject when a path doesnt exits.', () => {

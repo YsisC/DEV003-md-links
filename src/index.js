@@ -16,12 +16,12 @@ const mdLinks = (path, options) => {
       // si es un directorio
 
       if (options.validate) {
-        console.log('Validate: true'.bgGreen)
+        // console.log('Validate: true'.bgGreen)
         const valid = getStatusLink(pathAbsolute).then(link => link)
 
         resolve(valid)
       } else if (!options.validate) {
-        console.log('validate: false'.bgMagenta)
+        // console.log('validate: false'.bgMagenta)
         resolve(
           getLinks(pathAbsolute)
             .then(link => link)
