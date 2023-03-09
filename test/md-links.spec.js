@@ -12,8 +12,7 @@ const {
   getLinks,
   getStatusLink,
 } = require('../src/function.js')
-// let describe = ''
-// let it = ''
+const { expect, describe, jest, it } = require('@jest/globals')
 
 // -------------Si existe la ruta--------
 describe('routeExist', () => {
@@ -67,11 +66,12 @@ describe('readDirectory', () => {
     expect(readDirectory(path)).toEqual(['otherDocuments', 'test.md', 'test2.txt'])
   })
 })
+
 // -------------Retornar un array de archivos md --------
 describe('onlyFilesMD', () => {
   it('should return onnlyFilesMD.', () => {
     const path = 'testDocuments'
-    // console.log(onnlyFilesMD(path))
+    // console.log(onnlyFilesMD('test.md'))
     expect(onnlyFilesMD(path)).toEqual([
       'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
       'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\test.md',
@@ -81,11 +81,11 @@ describe('onlyFilesMD', () => {
 // -------------Retornar un string de un archivo md --------
 describe('readFilePath', () => {
   it('should return readFilePath string.', () => {
-    const path = 'test.md'
+    const path = './README2.md'
 
     return readFilePath(path)
       .then(re => {
-        //  console.log(typeof re))
+        // console.log(typeof re)
         expect(re).toBe(typeof string)
       })
       .catch(error => {
@@ -95,15 +95,38 @@ describe('readFilePath', () => {
       })
   })
 })
+
+// console.log(onnlyFilesMD('testDocuments'))
 // -------------Retornar un array de link de un archivo md --------
 describe('getLinks', () => {
   it('should return getLinks.', () => {
-    const path = 'test.md'
+    const path = 'testDocuments'
 
     return getLinks(path)
       .then(links => {
         // console.log(links)
-        expect(links).toBe(typeof object)
+        expect(links).toEqual([
+          {
+            href: 'https://nodejs.org/es/about/',
+            text: 'Acerca de Node.js - Documentación oficial',
+            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+          },
+          {
+            href: 'https://nodejs.org/api/fs.html',
+            text: 'Node.js file system - Documentación oficial',
+            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+          },
+          {
+            href: 'https://nodejs.org/api/http.html#http_http_get_options_callback',
+            text: 'Node.js http.get - Documentación oficial',
+            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+          },
+          {
+            href: 'https://es.wikipedia.org/wiki/Node.js',
+            text: 'Node.js - Wikipedia',
+            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+          },
+        ])
       })
       .catch(error => {
         {
@@ -126,57 +149,65 @@ describe('getLinks', () => {
       })
   })
 })
-// -------------opcion 1 getStatus --------
-// describe('getStatusLink', () => {
-//   it('should return getStatusLink.', () => {
-//     const path = 'README.md'
 
-//     return getStatusLink(path)
-//       .then(links => {
-//         console.log(typeof links)
-//         // expect(links).toBe(typeof object)
-//       })
-//       .catch(error => {
-//         {
-//           error
-//         }
-//       })
-//   })
+// -------------Const Link que arroja los links de getLinksStatus --------
+
+const linkValidate = [
+  {
+    href: 'https://nodejs.org/es/about/',
+    text: 'Acerca de Node.js - Documentación oficial',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+    status: 200,
+    ok: 'ok',
+  },
+  {
+    href: 'https://nodejs.org/api/fs.html',
+    text: 'Node.js file system - Documentación oficial',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+    status: 200,
+    ok: 'ok',
+  },
+  {
+    href: 'https://nodejs.org/api/http.html#http_http_get_options_callback',
+    text: 'Node.js http.get - Documentación oficial',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+    status: 200,
+    ok: 'ok',
+  },
+  {
+    href: 'https://es.wikipedia.org/wiki/Node.js',
+    text: 'Node.js - Wikipedia',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+    status: 200,
+    ok: 'ok',
+  },
+]
+// getStatusLink('./testDocuments/otherDocuments').then(resultado => {
+//   console.log(resultado)
 // })
+
+// -------------------- Mock  1 getStatusLinks --------
+global.fetch = jest.fn(() => {
+  return Promise.resolve({ status: 200, ok: 'ok' })
+})
+
+// --------------------  getStatusLinks ------------
+describe('getStatusLink', () => {
+  it('should return getStatusLink.', async () => {
+    const path = './testDocuments/otherDocuments'
+    // console.log(getStatusLink(path))
+    const data = await getStatusLink(path)
+    console.log('Prueba1')
+    // console.log(data)
+    expect(data).toEqual(
+      linkValidate
+      //
+    )
+  })
+})
 
 // // ------------- Opcion 2 getstatusLink--------
-// global.fetch = jest.fn(() => {
-//   Promise.resolve({ status: 200, ok: 'ok' })
-// })
 
-// describe('getStatusLink', () => {
-//   test('should return status y message ok.', () => {
-//     const linkValidate = [
-//       {
-//         href: 'https://www.genbeta.com/desarrollo/node-js-y-npm',
-//         text: 'Node.js y npm',
-//         file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\README2.md',
-//         status: 200,
-//         ok: 'ok',
-//       },
-//     ]
-
-//     // getLinks.mockResolvedValue(link)
-//     return getStatusLink(route).then(data => {
-//       console.log(data)
-//       // expect(data).toEqual(linkValidate)
-//     })
-//     // const LinkFail =[
-//     //   {
-//     //     href: 'https://www.drauta.com/que-es-nodejs-y-a-que-sirve',
-//     //     text: '¿Qué es Node.js y para qué sirve? - drauta.com',
-//     //     file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\README2.md',
-//     //     status: 404,
-//     //     ok: 'fail'
-//     //   },
-//     // ]
-//   })
-// })
 // -------------Si no existe la ruta-------
 describe('mdLinks', () => {
   it('should reject when a path doesnt exits.', () => {

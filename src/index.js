@@ -1,5 +1,5 @@
 const { routeExist, getAbsolute, getStatusLink, getLinks } = require('./function')
-const Color = require('colors')
+// const Color = require('colors')
 
 // -------------------------------- Funcion de MDLikns ------------------------------------------------
 

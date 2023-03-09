@@ -76,8 +76,8 @@ const getLinks = routePath => {
           resolve(arrayLink)
         })
         .catch(error => {
-          console.log(error)
-          reject('Error no hay Links')
+          // console.log(error)
+          reject(error)
         })
     })
   })
@@ -92,12 +92,13 @@ const getStatusLink = path => {
   return new Promise(resolve => {
     getLinks(path).then(resultArray => {
       let arrayPromise = []
-
+      console.log('primer then')
       resultArray.forEach(link => {
         const promiseFetch = fetch(link.href)
         arrayPromise.push(promiseFetch)
       })
       Promise.allSettled(arrayPromise).then(result => {
+        console.log('segundo then')
         let okResult = ''
         for (let i = 0; i < result.length; i++) {
           if ((result[i].status = 'fulfilled')) {
@@ -116,7 +117,6 @@ const getStatusLink = path => {
     })
   })
 }
-
 module.exports = {
   pathAbsolute,
   routeExist,
