@@ -1,5 +1,5 @@
 {
-  "name": "npm-ysisc-md-links",
+  "name": "ysisc-md-links",
   "version": "1.0.1",
   "engines": {
     "node": ">=16.x"
