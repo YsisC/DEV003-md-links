@@ -1,6 +1,6 @@
 {
-  "name": "ysisc-md-links",
-  "version": "0.1.0",
+  "name": "npm-ysisc-md-links",
+  "version": "1.0.1",
   "engines": {
     "node": ">=16.x"
   },
@@ -15,7 +15,7 @@
     "marked": "^4.2.12"
   },
   "description": "librería desarrollada con Node.js para validar links de archivos markdown",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "jest --coverage --detectOpenHandles "
   },

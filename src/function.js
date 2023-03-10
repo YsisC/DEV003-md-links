@@ -92,23 +92,21 @@ const getStatusLink = path => {
   return new Promise(resolve => {
     getLinks(path).then(resultArray => {
       let arrayPromise = []
-      console.log('primer then')
       resultArray.forEach(link => {
         const promiseFetch = fetch(link.href)
         arrayPromise.push(promiseFetch)
       })
       Promise.allSettled(arrayPromise).then(result => {
-        console.log('segundo then')
         let okResult = ''
         for (let i = 0; i < result.length; i++) {
-          if ((result[i].status = 'fulfilled')) {
+          if (result[i].status === 'fulfilled') {
             result[i].value.ok ? (okResult = 'ok') : (okResult = 'fail')
             resultArray[i].status = result[i].value.status
             resultArray[i].ok = okResult
           } else {
             // console.log('status', result[i].reason.cause)
             okResult = 'fail'
-            resultArray[i].status = result[i].value.status
+            resultArray[i].status = 404
             resultArray[i].ok = okResult
           }
           resolve(resultArray)

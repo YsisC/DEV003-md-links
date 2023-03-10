@@ -12,7 +12,7 @@ const {
   getLinks,
   getStatusLink,
 } = require('../src/function.js')
-const { expect, describe, jest, it } = require('@jest/globals')
+const { expect, describe, it } = require('@jest/globals')
 
 // -------------Si existe la ruta--------
 describe('routeExist', () => {
@@ -97,50 +97,39 @@ describe('readFilePath', () => {
 })
 
 // console.log(onnlyFilesMD('testDocuments'))
+
+// -------------Const Link que arroja los links de getLinks href, text y file --------
+const linkArray = [
+  {
+    href: 'https://nodejs.org/es/about/',
+    text: 'Acerca de Node.js - Documentación oficial',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+  },
+  {
+    href: 'https://nodejs.org/api/fs.html',
+    text: 'Node.js file system - Documentación oficial',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+  },
+  {
+    href: 'https://nodejs.org/api/http.html#http_http_get_options_callback',
+    text: 'Node.js http.get - Documentación oficial',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+  },
+  {
+    href: 'https://es.wikipedia.org/wiki/Node.js',
+    text: 'Node.js - Wikipedia',
+    file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
+  },
+]
 // -------------Retornar un array de link de un archivo md --------
 describe('getLinks', () => {
-  it('should return getLinks.', () => {
+  it('should return getLinks array of links.', () => {
     const path = 'testDocuments'
 
     return getLinks(path)
       .then(links => {
         // console.log(links)
-        expect(links).toEqual([
-          {
-            href: 'https://nodejs.org/es/about/',
-            text: 'Acerca de Node.js - Documentación oficial',
-            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
-          },
-          {
-            href: 'https://nodejs.org/api/fs.html',
-            text: 'Node.js file system - Documentación oficial',
-            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
-          },
-          {
-            href: 'https://nodejs.org/api/http.html#http_http_get_options_callback',
-            text: 'Node.js http.get - Documentación oficial',
-            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
-          },
-          {
-            href: 'https://es.wikipedia.org/wiki/Node.js',
-            text: 'Node.js - Wikipedia',
-            file: 'C:\\Users\\Ysis\\Documents\\Laboratoria\\DEV003-md-links\\testDocuments\\otherDocuments\\test2.md',
-          },
-        ])
-      })
-      .catch(error => {
-        {
-          error
-        }
-      })
-  })
-  it('should return getLinks.', () => {
-    const path = 'test.md'
-
-    return getLinks(path)
-      .then(links => {
-        // console.log(typeof links)
-        expect(links).toEqual(object)
+        expect(links).toEqual(linkArray)
       })
       .catch(error => {
         {
@@ -152,7 +141,7 @@ describe('getLinks', () => {
 
 // -------------Const Link que arroja los links de getLinksStatus --------
 
-const linkValidate = [
+const linkValidateArray = [
   {
     href: 'https://nodejs.org/es/about/',
     text: 'Acerca de Node.js - Documentación oficial',
@@ -186,7 +175,7 @@ const linkValidate = [
 //   console.log(resultado)
 // })
 
-// -------------------- Mock  1 getStatusLinks --------
+// -------------------- Mock  1 fetch --------
 global.fetch = jest.fn(() => {
   return Promise.resolve({ status: 200, ok: 'ok' })
 })
@@ -197,19 +186,29 @@ describe('getStatusLink', () => {
     const path = './testDocuments/otherDocuments'
     // console.log(getStatusLink(path))
     const data = await getStatusLink(path)
-    console.log('Prueba1')
+
     // console.log(data)
     expect(data).toEqual(
-      linkValidate
+      linkValidateArray
       //
     )
   })
 })
 
-// // ------------- Opcion 2 getstatusLink--------
-
-// -------------Si no existe la ruta-------
+// ------------- Function MDlinks------------
 describe('mdLinks', () => {
+  it('should return getStatusLink.', async () => {
+    const path = './testDocuments/otherDocuments'
+
+    const data = await mdLinks(path, { validate: true })
+    expect(data).toEqual(linkValidateArray)
+  })
+  it('should return getStatusLink.', async () => {
+    const path = './testDocuments/otherDocuments'
+
+    const data = await mdLinks(path, { validate: false })
+    expect(data).toEqual(linkArray)
+  })
   it('should reject when a path doesnt exits.', () => {
     return mdLinks('/ruta/doesntexist.md').catch(error => {
       expect(error).toBe('Este archivo no existe')

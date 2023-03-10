@@ -61,7 +61,6 @@ mdLinks(path, { validate })
       console.log(`${uniqueLink(links)}`.blue)
     } else if (help) {
       console.log(msnHelp())
-      // console.log(Colors.info`Md-links`)
     } else {
       console.log('Welcome to md-links'.bgGreen)
       console.log(
