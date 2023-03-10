@@ -32,7 +32,7 @@ algunas estadísticas.
 ## 2.COMO INSTALAR MD LINKS
 
 ```sh
-npm install ysisc-md-links
+npm i ysisc-md-links
 ```
 
 ## 3. Implementacion de uso
