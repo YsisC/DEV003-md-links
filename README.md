@@ -37,6 +37,38 @@ npm install ysisc-md-links
 
 ## 3. Implementacion de uso
 
+Si necesitas ayuda:
+
+```sh
+md-links <path> --help
+```
+
+![Getting Started](./img/mdlinks%20help.png)
+
+En caso de necesitar los links
+
+```sh
+md-links <path> --validate
+```
+
+![Getting Started](./img/mdlinks%20validate.png)
+
+En caso de necesitar los links totales exitoso y rotos
+
+```sh
+md-links <path> --validate --stats
+```
+
+![Getting Started](./img/mdlinks%20stats%20validate.png)
+
+En caso de necesitar los links totales exitoso
+
+```sh
+md-links <path> --stats
+```
+
+![Getting Started](./img/mdlinks%20stats%20.png)
+
 ## 4. Diagrama de flujo
 
 ---
