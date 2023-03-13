@@ -51,7 +51,7 @@ En caso de necesitar los links
 md-links <path> --validate
 ```
 
-![Getting Started](./img/mdlinks%20validate.png)
+![Getting Started](./img/mdlinks%20validate..png)
 
 En caso de necesitar los links totales exitoso y rotos
 
