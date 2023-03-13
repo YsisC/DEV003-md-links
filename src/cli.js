@@ -12,8 +12,8 @@ Colors.setTheme({
   debug: 'blue',
   error: 'red',
 })
-// const { process } = require('process')
 
+// console.log(process.env)
 //Total de links
 const totalLinks = array => `Total: ${array.length}`
 
@@ -53,9 +53,11 @@ mdLinks(path, { validate })
       console.log(`${totalLinks(links)}`.blue)
       console.log(`${uniqueLink(links)}`.blue)
       console.log(`${brokenLinks(links)}`.red)
+      process.exit(0)
     } else if (validate) {
       // console.log('entro')
       console.log(links.flat())
+      process.exit(0)
     } else if (stats) {
       console.log(`${totalLinks(links)}`.blue)
       console.log(`${uniqueLink(links)}`.blue)
