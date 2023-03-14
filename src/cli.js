@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const { mdLinks } = require('./index')
+require('colors')
 const Colors = require('colors')
 const { log } = console
 Colors.setTheme({
@@ -14,6 +15,16 @@ Colors.setTheme({
 })
 
 // console.log(process.env)
+// Temlate de links
+
+const linkTemplate = array => {
+  const template = array.map(
+    link => ` \n ${'HREF:'.bgBlue} ${link.href.cyan} 
+ ${'TEXT:'.bgCyan} ${link.text.cyan}`
+  )
+  return template
+}
+
 //Total de links
 const totalLinks = array => `Total: ${array.length}`
 
@@ -69,7 +80,7 @@ mdLinks(path, { validate })
         'This are the links that throws your route, if you want to know the statistics of totals you can try with --stats o --validate'
           .italic
       )
-      console.log(links)
+      console.log(`${linkTemplate(links)}`)
     }
   })
   .catch(error => {
