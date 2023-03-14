@@ -19,8 +19,23 @@ Colors.setTheme({
 
 const linkTemplate = array => {
   const template = array.map(
-    link => ` \n ${'HREF:'.bgBlue} ${link.href.cyan} 
- ${'TEXT:'.bgCyan} ${link.text.cyan}`
+    link => ` \n 
+ ${'HREF:'} ${link.href.cyan} 
+ ${'TEXT:'} ${link.text.cyan}
+ ${'FILE:'} ${link.file.cyan}
+ `
+  )
+  return template
+}
+const linkValidateTemplate = array => {
+  const template = array.map(
+    link => ` \n
+ ${'HREF:'} ${link.href.cyan}
+ ${'TEXT:'} ${link.text.cyan}
+ ${'FILE:'} ${link.file.cyan}
+ ${'STATUS:'} ${link.status}
+ ${'OK:'} ${link.ok.cyan}
+ `
   )
   return template
 }
@@ -67,7 +82,8 @@ mdLinks(path, { validate })
       process.exit(0)
     } else if (validate) {
       // console.log('entro')
-      console.log(links.flat())
+      // console.log(links)
+      console.log(`${linkValidateTemplate(links)}`)
       process.exit(0)
     } else if (stats) {
       console.log(`${totalLinks(links)}`.blue)
@@ -75,7 +91,7 @@ mdLinks(path, { validate })
     } else if (help) {
       console.log(msnHelp())
     } else {
-      console.log('Welcome to md-links'.bgGreen)
+      // console.log('Welcome to md-links'.bgGreen)
       console.log(
         'This are the links that throws your route, if you want to know the statistics of totals you can try with --stats o --validate'
           .italic
