@@ -51,7 +51,7 @@ En caso de necesitar los links
 md-links <path> --validate
 ```
 
-![Getting Started](https://raw.githubusercontent.com/YsisC/DEV003-md-links/main/img/mdlinks%20validate..png)
+![Getting Started](https://raw.githubusercontent.com/YsisC/DEV003-md-links/main/img/mdlinks%20validate.png)
 
 En caso de necesitar los links totales exitoso y rotos
 
@@ -59,7 +59,7 @@ En caso de necesitar los links totales exitoso y rotos
 md-links <path> --validate --stats
 ```
 
-[mdlinks-stats-validate.png](https://postimg.cc/FdscxqJr)
+![Getting Started](https://raw.githubusercontent.com/YsisC/DEV003-md-links/main/img/mdlinks%20stats%20validate.png)
 
 En caso de necesitar los links totales exitoso
 
@@ -67,7 +67,7 @@ En caso de necesitar los links totales exitoso
 md-links <path> --stats
 ```
 
-[mdlinks-stats.png](https://postimg.cc/dL0H0HHK)
+![Getting Started](https://raw.githubusercontent.com/YsisC/DEV003-md-links/main/img/mdlinks%20stats%20.png)
 
 ## 4. Diagrama de flujo
 
