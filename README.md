@@ -71,7 +71,13 @@ md-links <path> --stats
 
 ## 4. Diagrama de flujo
 
----
+Diagrama de MD-LINKS
+
+![md-links diagrama](https://raw.githubusercontent.com/YsisC/DEV003-md-links/main/img/diagrama%20mdlinks%2C.png)
+
+Diagrama de CLI
+
+![cli diagrama](https://raw.githubusercontent.com/YsisC/DEV003-md-links/main/img/diagrama%20cli.js.png)
 
 ## 5. Checklist
 
